@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 typedef struct Nodo {
-    char dato;
+    char Dato;
     struct Nodo* sig;
 } T_nodo;
 

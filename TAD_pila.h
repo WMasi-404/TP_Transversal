@@ -6,7 +6,7 @@
 //fifo  : first in first out
 
 typedef struct Nodo{
-  int dato;   
+  int Dato;   
   struct Nodo *sig;
 } T_nodo;
 

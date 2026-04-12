@@ -36,17 +36,17 @@ int esVocal(char c){
 
 void cadena_eliminar_vocales(Cadena* cadena) {
 
-    Cadena actual = *cadena;
+    Cadena actual = (*cadena);
     Cadena anterior = NULL;
 
     while (actual != NULL) {               //recorro la cadena
 
-        if (esVocal(actual->dato)) {       //pregunta si es una vocal
+        if (esVocal(actual->Dato)) {       //pregunta si es una vocal
 
             if (anterior == NULL) {        //si el anterior es null entonces  la vocal esta en la cabeza
-                *cadena = actual->sig;          
+                (*cadena) = actual->sig;          
                 free(actual);  //libero
-                actual = *cadena;
+                actual = (*cadena);
             } else {
                 anterior->sig = actual->sig; 
                 free(actual);
@@ -64,7 +64,7 @@ void cadena_imprimir(Cadena cadena) {
     Cadena aux = cadena;
 
     while (aux != NULL) {
-        printf("%c", aux->dato);
+        printf("%c", aux->Dato);
         aux = aux->sig;
     }
     printf("\n");
@@ -72,7 +72,7 @@ void cadena_imprimir(Cadena cadena) {
 
 void cadena_destruir(Cadena* cadena) {
 
-    Cadena aux = *cadena;
+    Cadena aux = (*cadena);
 
     while (aux != NULL) {
         Cadena borrar = aux;
@@ -80,6 +80,6 @@ void cadena_destruir(Cadena* cadena) {
         free(borrar);
     }
 
-    *cadena = NULL;
+    (*cadena) = NULL;
 }
 
