@@ -12,7 +12,7 @@
 
     ListaC caracter_crear_lista(void);
     void  caracter_inserta_final(ListaC* , char);
-    void caracter_elimina(ListaC*, char);
+    int caracter_elimina(ListaC*, char);
     void caracter_busca(ListaC, char);
     void caracter_mostrarL(ListaC);
     ListaC caracter_limpiaL(ListaC*);

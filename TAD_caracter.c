@@ -20,20 +20,26 @@ void caracter_inserta_final(ListaC* lc, char c){
     else    printf("---ERROR AL ASIGNAR MEMORIA---\n");
 }
 
-void caracter_elimina(ListaC* lc, char c){
+int caracter_elimina(ListaC* lc, char c){
     ListaC aux,ant;
     aux = (*lc);
     ant = NULL;
-
+    int j = 0;
     while(aux != NULL && c != aux->Dato){
         ant = aux;
         aux = aux->sig;
     }
-    if(ant == NULL)     (*lc) = (*lc)->sig;
+    if(ant == NULL){
+        (*lc) = (*lc)->sig;
+        j = 1;
+    }
     else{
         ant->sig = aux->sig;
         free(aux);
+        j = 1;
     }
+
+    return j;
 }
 
 void caracter_busca(ListaC lc, char c){
