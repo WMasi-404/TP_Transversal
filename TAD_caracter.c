@@ -10,14 +10,14 @@ void caracter_inserta_final(ListaC* lc, char c){
     if(nvo != NULL){
         nvo->Dato = c;
         nvo->sig = NULL;
-    }
-    else    printf("---ERROR AL ASIGNAR MEMORIA---\n");
-    if((*lc) == NULL)   (*lc) = nvo;
-    else{
+        if((*lc) == NULL)   (*lc) = nvo;
+        else{
         aux = (*lc);
         while(aux->sig != NULL) aux = aux->sig;
         aux->sig = nvo;
+        }
     }
+    else    printf("---ERROR AL ASIGNAR MEMORIA---\n");
 }
 
 void caracter_elimina(ListaC* lc, char c){
@@ -25,7 +25,7 @@ void caracter_elimina(ListaC* lc, char c){
     aux = (*lc);
     ant = NULL;
 
-    while(aux != NULL && c != (*lc)->Dato){
+    while(aux != NULL && c != aux->Dato){
         ant = aux;
         aux = aux->sig;
     }
@@ -40,7 +40,7 @@ void caracter_busca(ListaC lc, char c){
     ListaC aux;
     aux = lc;
     while(aux != NULL && c != aux->Dato)  aux = aux->sig;
-    if(c == aux->Dato)     printf("Caracter encontrado\n");
+    if(aux != NULL)     printf("Caracter encontrado\n");
     else    printf("El caracter no esta en la lista\n");
 }
 
