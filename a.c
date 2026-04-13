@@ -180,7 +180,7 @@ int main(){
 
     append_list(&l, s1);    
 
-    /* B = {"palabra", {A}} */
+                      /* B = {"palabra", {A}} */
     Tdata s3 = create_str_ast();
     s3->string = load2("palabra");// cargo la cadena palabra
 
