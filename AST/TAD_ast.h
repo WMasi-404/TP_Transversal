@@ -1,20 +1,19 @@
 #ifndef TAD_AST_H
 #define TAD_AST_H
-    #include <string.h>
-    #include <stdio.h>
-    #include <stdlib.h>
+#include "TAD_cadena.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-    /*Definicion de tipos de datos*/
-    #define STR 1
-    #define SET 2
-    #define LIST 3
+ /*Definicion de tipos de datos*/
+#define STR 1
+#define SET 2
+#define LIST 3
 
-    typedef char* str;
-
+typedef char* str;
     /*Estructura de un nodo*/
     typedef struct dataType{
         int nodeType;
-        union{
+        union{// esto significa que usa  str o struct
             str string;
             struct{
                 struct dataType* data;
@@ -23,32 +22,35 @@
         };
     }*Tdata;
 
-    /*Creacion de los nodos */
-    Tdata create_str_ast(){
-        Tdata n = (Tdata)(malloc(sizeof(dataType)));
-        n->nodeType = STR;
-        n->string = NULL;
-        return n;
-    }
+/*Creacion de los nodos */
+Tdata create_str_ast();
+Tdata create_set();
+Tdata create_list();
+/*DEep copy*/
+ Tdata clone(Tdata);
+/* =APPEND  es para agregar al final, no tiene sentido con cadenas*/
+void append_set(Tdata*, Tdata);
 
-    Tdata create_set(){
-        Tdata n = (Tdata)(malloc(sizeof(dataType)));
-        n->nodeType = SET;
-        n->data = NULL;
-        n->next = NULL;
+/* print */
+void printSet(Tdata);
+void print_string(Tdata);//deberia estar en TAD CADENA
+void printList(Tdata);        
 
-        return n;
-    }
+/*funciones para LIST*/
+void append_list(Tdata*, Tdata); //ya esta implementado
+int length(Tdata);
+Tdata copy_list(Tdata) ;
+Tdata concat(Tdata, Tdata);
+int search(Tdata, Tdata);//busqueda (1 si encontró, 0 si no)
 
-    Tdata create_list(){
-        Tdata n = (Tdata)(malloc(sizeof(dataType)));
-        n->nodeType = LIST;
-        n->data = NULL;
-        n->next = NULL;
-
-        return n;
-    }
-
-    
+/*funciones para SET*/
+void insert_set(Tdata*, Tdata);
+int  belongs(Tdata , Tdata );//(1 si encontró, 0 si no)
+void remove_set(Tdata* , Tdata);//el segudno es el elemento a eliminar
+Tdata union_set(Tdata , Tdata );
+Tdata intersection_set(Tdata , Tdata );
+Tdata difference_set(Tdata , Tdata );
+int subset(Tdata , Tdata );//Devuelve si es subconjunto:
+int  equals_set(Tdata , Tdata );//si sob iguales o no
 
 #endif
