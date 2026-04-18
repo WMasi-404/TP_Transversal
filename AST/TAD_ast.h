@@ -23,28 +23,28 @@ typedef char* str;
     }*Tdata;
 
 /*Creacion de los nodos */
-Tdata create_str_ast();
-Tdata create_set();
-Tdata create_list();
+Tdata create_str_ast();//ya esta implementada
+Tdata create_set();//ya esta implementada
+Tdata create_list();//ya esta implementada
 /*DEep copy*/
- Tdata clone(Tdata);
+ Tdata clone(Tdata);//ya esta implementada
 /* =APPEND  es para agregar al final, no tiene sentido con cadenas*/
-void append_set(Tdata*, Tdata);
+void append_set(Tdata*, Tdata);//ya esta implementada
 
 /* print */
-void printSet(Tdata);
+void printSet(Tdata);//ya esta implementada
 void print_string(Tdata);//deberia estar en TAD CADENA
 void printList(Tdata);        
 
 /*funciones para LIST*/
 void append_list(Tdata*, Tdata); //ya esta implementado
-int length(Tdata);
-Tdata copy_list(Tdata) ;
-Tdata concat(Tdata, Tdata);
-int search(Tdata, Tdata);//busqueda (1 si encontró, 0 si no)
+int length(Tdata);//ya esta implementada
+Tdata copy_list(Tdata) ;//ya esta implementada
+Tdata concat(Tdata, Tdata);//ya esta implementada
+int search(Tdata, Tdata);//aun no
 
 /*funciones para SET*/
-void insert_set(Tdata*, Tdata);
+void insert_set(Tdata*, Tdata);//usar el append set creo
 int  belongs(Tdata , Tdata );//(1 si encontró, 0 si no)
 void remove_set(Tdata* , Tdata);//el segudno es el elemento a eliminar
 Tdata union_set(Tdata , Tdata );

@@ -87,14 +87,14 @@ void append_set(Tdata *A, Tdata e){ //A -> puntero al conjunto
 void append_list(Tdata *A, Tdata e){//A -> puntero al conjunto, e -> elemento a insertar
     Tdata nuevo = create_list();
 
-    nuevo->data = clone(e);
-    nuevo->next = NULL;
+    nuevo->data = clone(e);//copia  el elemento
+    nuevo->next = NULL;//lo prepara como ultimo nodo
 
-    if(*A == NULL){
+    if(*A == NULL){//si cabeza esta vacia
         *A = nuevo;
     }else{
         Tdata aux = *A;
-        while(aux->next != NULL){
+        while(aux->next != NULL){//recorro hasta el final y lo inserta
             aux = aux->next;
         }
         aux->next = nuevo;
@@ -138,3 +138,86 @@ void printSet(Tdata A){
 
     printf(" }");
 }
+
+int length(Tdata list){//longitud de la lista
+    int contador = 0;
+    Tdata actual = list;
+
+    while(actual != NULL){
+        contador ++;
+        actual = actual->next;
+    }
+    return contador;
+}
+Tdata copy_list(Tdata list) { //copia profunda Crear una nueva lista independiente con los mismos elementos que otra lista.
+    Tdata nueva = NULL;
+    Tdata aux = list;
+
+    while(aux != NULL){
+        append_list(&nueva, aux->data);
+        aux = aux -> next;
+    }
+    
+    return nueva;
+    // return clone(list); esta es otra forma de hacer  ahorra codigo
+}
+Tdata concat(Tdata l1, Tdata l2){
+    Tdata aux1 = l1, aux2 = l2;
+    Tdata Resultado = NULL;
+
+    while(aux1 != NULL){
+        append_list(&Resultado,aux1->data);
+        aux1 = aux1 -> next;
+    }
+
+    while(aux2 != NULL){
+        append_list(&Resultado,aux2->data);
+        aux2 = aux2 -> next;
+    }
+    
+    return Resultado;
+}
+//funcion privada para compararar Tdata general
+int equals(Tdata A, Tdata B){ //1=verdadero , 2=falso
+    if(A == NULL && B == NULL){// si ambos son nulos son iguales
+        return 1;
+    }
+    if(A == NULL || B == NULL) return 0;
+
+    if(A->nodeType != B->nodeType) return 0; //si son de distinto tipo no son iguales
+    
+    int a = A->nodeType;
+
+    switch (a){ //comparo segun el tipo que sea STR,LIST;SET
+    case STR:
+        return strcmp(A->string, B->string) == 0;
+    case SET:
+        break;//me falta comparar cojuntos tendria que  implementar el belong que es si pertenece un elemento a un conjunto 
+    case LIST:
+        if(length(A) != length(B)) return 0; //si longitudes son distintitan entonces la listas no son iguales
+        
+        Tdata aux1 = A;
+        Tdata aux2 = B;
+
+        while(aux1 != NULL && aux2 != NULL){
+            if(equals(aux1->data,aux2->data) == 0 ) return 0;
+            aux1 = aux1 -> next;
+            aux2 = aux2 -> next;
+        }
+        return 1;
+    }
+    return 0;
+}
+int search(Tdata list, Tdata elem){//busqueda
+    int bandera = 0;
+    Tdata actual = list;
+
+    while(actual != NULL){
+        if(strcmp(actual->data->string, elem->string) == 0){// me falta aca por eso estaba haciendo el comparador general de Tdato
+            bandera = 1;
+        }
+        actual = actual -> next;
+    }
+    return bandera;
+}
+
