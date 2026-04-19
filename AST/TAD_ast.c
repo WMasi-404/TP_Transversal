@@ -149,6 +149,7 @@ int length(Tdata list){//longitud de la lista
     }
     return contador;
 }
+
 Tdata copy_list(Tdata list) { //copia profunda Crear una nueva lista independiente con los mismos elementos que otra lista.
     Tdata nueva = NULL;
     Tdata aux = list;
@@ -161,6 +162,7 @@ Tdata copy_list(Tdata list) { //copia profunda Crear una nueva lista independien
     return nueva;
     // return clone(list); esta es otra forma de hacer  ahorra codigo
 }
+
 Tdata concat(Tdata l1, Tdata l2){
     Tdata aux1 = l1, aux2 = l2;
     Tdata Resultado = NULL;
@@ -177,6 +179,7 @@ Tdata concat(Tdata l1, Tdata l2){
     
     return Resultado;
 }
+
 //funcion privada para compararar Tdata general
 int equals(Tdata A, Tdata B){ //1=verdadero , 2=falso
     if(A == NULL && B == NULL){// si ambos son nulos son iguales
@@ -208,6 +211,7 @@ int equals(Tdata A, Tdata B){ //1=verdadero , 2=falso
     }
     return 0;
 }
+
 int search(Tdata list, Tdata elem){//busqueda
     int bandera = 0;
     Tdata actual = list;
