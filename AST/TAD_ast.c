@@ -43,8 +43,7 @@ Tdata clone(Tdata n){
         Tdata tail = NULL;//Es el último nodo actual de la lista Sirve para agregar nuevos nodos al final rápido.
 
         while(aux != NULL){//recorro la lista
-            Tdata nodo_lista = create_set();  // nodo contenedor
-
+            Tdata nodo_lista = (aux->nodeType == SET) ? create_set() : create_list();  // nodo contenedor
             nodo_lista->data = clone(aux->data);//copio profundamente el contenido del nodo actual
             nodo_lista->next = NULL;
 
@@ -225,3 +224,14 @@ int search(Tdata list, Tdata elem){//busqueda
     return bandera;
 }
 
+int belongs(Tdata set, Tdata elem){
+    int b = 0;
+    Tdata act = set;
+    while(act != NULL && b != 1){
+        if(act -> data == elem -> data){
+            b = 1;
+        }
+        act = act->next;
+    }
+    return b;
+}
