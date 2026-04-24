@@ -33,26 +33,24 @@ Tdata clone(Tdata n){
     if(n->nodeType == STR){
         nuevo = create_str_ast();
         nuevo->string = load2(n->string);
+        return nuevo;
     }
-
-    else if(n->nodeType == SET || n->nodeType == LIST){
-        nuevo = (n->nodeType == SET) ? create_set() : create_list();//pregunto si es de tipo set o tipo LIST
-
-        Tdata aux = n;
-        Tdata head = NULL;//Es el primer nodo de la lista sirve para no perder el inicio de la lista
-        Tdata tail = NULL;//Es el último nodo actual de la lista Sirve para agregar nuevos nodos al final rápido.
+         
+    Tdata aux = n;
+    Tdata head = NULL;//Es el primer nodo de la lista sirve para no perder el inicio de la lista
+    Tdata tail = NULL;//Es el último nodo actual de la lista Sirve para agregar nuevos nodos al final rápido.
 
         while(aux != NULL){//recorro la lista
-            Tdata nodo_lista = (aux->nodeType == SET) ? create_set() : create_list();  // nodo contenedor
-            nodo_lista->data = clone(aux->data);//copio profundamente el contenido del nodo actual
-            nodo_lista->next = NULL;
+            Tdata nodo = (aux->nodeType == SET) ? create_set() : create_list();  // pregunto si el nodo actual es un conjunto o una lista para crear el nodo nuevo del mismo tipo
+            nodo -> data = clone(aux->data);//copio profundamente el contenido del nodo actual
+            nodo -> next = NULL;
 
             if(head == NULL){// es el primer nodo de la lista nueva
-                head = nodo_lista;
-                tail = nodo_lista;
+                head = nodo;
+                tail = nodo;
             } else {//sino enlazo pongo al ultimo nodo al final y depues actualizado quien es la cola
-                tail->next = nodo_lista;
-                tail = nodo_lista;
+                tail -> next = nodo;
+                tail = nodo;
             }
 
             aux = aux->next;//avanzo
@@ -61,8 +59,6 @@ Tdata clone(Tdata n){
         return head; //retorno la cabeza la cual hace referencia al primer nodo de la lista nueva
     }
 
-    return nuevo;
-}
 
 /* =APPEND  es para agregar al final*/
 
@@ -117,10 +113,10 @@ void printSet(Tdata A){
         if(aux->data != NULL){
 
             if(aux->data->nodeType == STR){
-                print_string(aux->data->string);
+                cadena_imprimir(aux->data->string); //hace referencia al tad cadena donde tiene que tener TAD cadena
             }
 
-            else if(aux->data->nodeType == SET){
+            else if(aux->data->nodeType == SET){ //
                 printSet(aux->data);  
             }
 
@@ -150,16 +146,8 @@ int length(Tdata list){//longitud de la lista
 }
 
 Tdata copy_list(Tdata list) { //copia profunda Crear una nueva lista independiente con los mismos elementos que otra lista.
-    Tdata nueva = NULL;
-    Tdata aux = list;
-
-    while(aux != NULL){
-        append_list(&nueva, aux->data);
-        aux = aux -> next;
-    }
-    
-    return nueva;
-    // return clone(list); esta es otra forma de hacer  ahorra codigo
+    return clone(list);//aprovecho la funcion clone que ya hace una copia profunda de cualquier Tdata 
+                       //la funcion clone ya hace la copia profunda de la lista y sus elementos
 }
 
 Tdata concat(Tdata l1, Tdata l2){
@@ -174,8 +162,8 @@ Tdata concat(Tdata l1, Tdata l2){
     while(aux2 != NULL){
         append_list(&Resultado,aux2->data);
         aux2 = aux2 -> next;
-    }
-    
+    } 
+       
     return Resultado;
 }
 
@@ -184,39 +172,54 @@ int equals(Tdata A, Tdata B){ //1=verdadero , 2=falso
     if(A == NULL && B == NULL){// si ambos son nulos son iguales
         return 1;
     }
-    if(A == NULL || B == NULL) return 0;
+    if(A == NULL || B == NULL) return 0;//si uno es nulo y el otro no , entonces son distintos
 
     if(A->nodeType != B->nodeType) return 0; //si son de distinto tipo no son iguales
     
     int a = A->nodeType;
 
     switch (a){ //comparo segun el tipo que sea STR,LIST;SET
-    case STR:
-        return strcmp(A->string, B->string) == 0;
-    case SET:
-        break;//me falta comparar cojuntos tendria que  implementar el belong que es si pertenece un elemento a un conjunto 
-    case LIST:
+    case STR:{
+        return cadena_comparar(A->string, B->string) == 0;}//Sel strcmp devuelve 0 si son iguales , entonces comparo con 0 para devolver 1 si son iguales y 0 si no lo son
+    case SET:{
+    // Cada elemento de A debe estar en B
+       Tdata aux = A; //creo un puntero para recorrer el conjunto A
+       while (aux != NULL) {
+            if (!belongs(B, aux->data)) return 0;//utilizo la funcion belongs para verificar si el elemento actual de A esta en B
+            aux = aux->next;
+        }
+    // Cada elemento de B debe estar en A
+        aux = B;
+        while (aux != NULL) {
+            if (!belongs(A, aux->data)) return 0;
+            aux = aux->next;
+        }
+        return 1;
+    }
+    case LIST:{
         if(length(A) != length(B)) return 0; //si longitudes son distintitan entonces la listas no son iguales
         
         Tdata aux1 = A;
         Tdata aux2 = B;
 
         while(aux1 != NULL && aux2 != NULL){
-            if(equals(aux1->data,aux2->data) == 0 ) return 0;
+            if(equals(aux1->data,aux2->data) == 0 ) return 0;//llamada recuriva para comparar los elementos de la lista, los elementos de la lista pueden ser
+                                                             // de cualquier tipo por eso la funcion equals es general para comparar cualquier Tdata
             aux1 = aux1 -> next;
             aux2 = aux2 -> next;
         }
         return 1;
     }
+    }
     return 0;
 }
 
-int search(Tdata list, Tdata elem){//busqueda
+int search(Tdata list, Tdata elem){//busqueda de un elemento en la lista devuelve 1 si lo encuentra y 0 si no lo encuentra
     int bandera = 0;
     Tdata actual = list;
 
     while(actual != NULL){
-        if(strcmp(actual->data->string, elem->string) == 0){// me falta aca por eso estaba haciendo el comparador general de Tdato
+        if(equals(actual -> data, elem)){// me falta aca por eso estaba haciendo el comparador general de Tdato
             bandera = 1;
         }
         actual = actual -> next;
@@ -225,13 +228,42 @@ int search(Tdata list, Tdata elem){//busqueda
 }
 
 int belongs(Tdata set, Tdata elem){
-    int b = 0;
-    Tdata act = set;
-    while(act != NULL && b != 1){
-        if(act -> data == elem -> data){
-            b = 1;
+    Tdata actual = set;//creo un puntero para recorrer el conjunto
+    while(actual != NULL){
+        if(equals(actual->data, elem) == 1){//utilizo la funcion equals para comparar el elemento con cada elemento del conjunto
+            return 1;
         }
-        act = act->next;
+        actual = actual -> next;//avanzo al siguiente nodo
     }
-    return b;
+    return 0;
+}
+
+void insert_set(Tdata *set, Tdata elem){
+    if(!belongs(*set, elem))//si el elemento no pertenece al conjunto entonces lo inserto
+        append_set(set, elem);//lo agrego al final del conjunto utilizando la funcion append_set que ya hace la copia profunda del elemento
+
+    } 
+
+void remove_set(Tdata *set, Tdata elem){//funcion que elimina el elemento del conjunto si pertenece
+    if(!belongs(*set, elem)) return;//si elemento no pertenece al conjunto no hago nada
+    Tdata actual = *set;
+    Tdata anterior = NULL;
+
+    while(actual != NULL){
+        if(equals(actual -> data, elem) == 1){//Si son iguales entonces lo elimino
+            if(anterior == NULL){
+                *set = actual -> next;//si el elemento a eliminar es el primero del conjunto entonces cambio la cabeza
+            }
+            else{
+                anterior -> next = actual -> next;// sino enlazo el nodo anterior con el siguiente del nodo actual para eliminar el nodo actual
+            }
+            actual -> next = NULL;
+            free(actual);//libero la memoria del nodod eliminado
+            return;//como es un conjunto no puede haber elementos repetidos
+        }
+        anterior = actual;
+        actual = actual -> next;
+        
+    }
+
 }
