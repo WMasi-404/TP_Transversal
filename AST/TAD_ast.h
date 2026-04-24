@@ -1,15 +1,15 @@
--#ifndef TAD_AST_H
-#define TAD_AST_H
-#include "TAD_cadena.h"
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef TAD_AST_H
+    #define TAD_AST_H
+    #include "TAD_cadena.h"
+    #include <stdio.h>
+    #include <stdlib.h>
 
  /*Definicion de tipos de datos*/
-#define STR 1
-#define SET 2
-#define LIST 3
+    #define STR 1
+    #define SET 2
+    #define LIST 3
 
-typedef char* str;
+    typedef char* str;
     /*Estructura de un nodo*/
     typedef struct dataType{
         int nodeType;
@@ -48,6 +48,8 @@ int search(Tdata, Tdata);//ya esta implementada
 void insert_set(Tdata*, Tdata);//ya esta implementada
 int  belongs(Tdata , Tdata );//(1 si encontró, 0 si no), ya esta implementada
 void remove_set(Tdata* , Tdata);//ya esta implementada
+int subset(Tdata, Tdata);
+int equals_set(Tdata, Tdata);
 Tdata union_set(Tdata , Tdata );  
 Tdata intersection_set(Tdata , Tdata );
 Tdata difference_set(Tdata , Tdata );

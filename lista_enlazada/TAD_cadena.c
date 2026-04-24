@@ -6,7 +6,7 @@ Cadena cadena_crear() {
 
 void cadena_agregar(Cadena* cadena, char c) {
     Cadena nuevo = malloc(sizeof(Cadena));
-    nuevo->dato = c;
+    nuevo->Dato = c;
     nuevo->sig = NULL;
 
     if (*cadena == NULL) { 
@@ -82,12 +82,6 @@ void cadena_destruir(Cadena* cadena) {
 
     (*cadena) = NULL;
 }
-
-Cadena load2(char* texto) {
-    Cadena cadena = NULL;
-    cadena_desde_string(&cadena, texto);
-    return cadena;
-}   
 
 Cadena load2(Cadena original) {//load2 es para cargar una cadena a partir de otra cadena, es decir hacer una copia de la cadena original
     Cadena nueva = cadena_crear();//creo una nueva cadena vacia

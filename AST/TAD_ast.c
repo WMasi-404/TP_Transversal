@@ -238,3 +238,37 @@ int belongs(Tdata set, Tdata elem){
     }
     return b;
 }
+
+void insert_set(Tdata *A, Tdata e) {
+    append_set(A, e);
+}
+
+void remove_set(Tdata *set, Tdata elem) {
+    Tdata aux = *set;
+    Tdata prev = NULL;
+    while (aux != NULL) {
+        if (equals(aux->data, elem)) {
+            if (prev == NULL) {
+                *set = aux->next;
+            } else {
+                prev->next = aux->next;
+            }
+            return;
+        }
+        prev = aux;
+        aux = aux->next;
+    }
+}
+
+int subset(Tdata A, Tdata B) {
+    Tdata aux = A;
+    while (aux != NULL) {
+        if (!belongs(B, aux->data)) return 0;
+        aux = aux->next;
+    }
+    return 1;
+}
+
+int equals_set(Tdata A, Tdata B) {
+    return equals(A, B);
+}
