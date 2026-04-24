@@ -8,12 +8,13 @@
 #define STR 1
 #define SET 2
 #define LIST 3
-    typedef char* str; //defino un nuevo tipo de dato para las cadenas de caracteres
+
+typedef char* str;
     /*Estructura de un nodo*/
     typedef struct dataType{
         int nodeType;
         union{// esto significa que usa  str o struct
-            str string;
+            Cadena string;
             struct{
                 struct dataType* data;
                 struct dataType* next;
@@ -21,6 +22,7 @@
         };
     }*Tdata;
 
+int equals(Tdata, Tdata);  /* comparador general, usado internamente */
 /*Creacion de los nodos */
 Tdata create_str_ast();//ya esta implementada
 Tdata create_set();//ya esta implementada
@@ -40,16 +42,16 @@ void append_list(Tdata*, Tdata); //ya esta implementado
 int length(Tdata);//ya esta implementada
 Tdata copy_list(Tdata) ;//ya esta implementada
 Tdata concat(Tdata, Tdata);//ya esta implementada
-int search(Tdata, Tdata);//aun no
+int search(Tdata, Tdata);//ya esta implementada
 
 /*funciones para SET*/
-void insert_set(Tdata*, Tdata);//usar el append set creo
-int  belongs(Tdata , Tdata );//(1 si encontró, 0 si no)
-void remove_set(Tdata* , Tdata);//el segudno es el elemento a eliminar
-Tdata union_set(Tdata , Tdata );
+void insert_set(Tdata*, Tdata);//ya esta implementada
+int  belongs(Tdata , Tdata );//(1 si encontró, 0 si no), ya esta implementada
+void remove_set(Tdata* , Tdata);//ya esta implementada
+Tdata union_set(Tdata , Tdata );  
 Tdata intersection_set(Tdata , Tdata );
 Tdata difference_set(Tdata , Tdata );
 int subset(Tdata , Tdata );//Devuelve si es subconjunto:
-int  equals_set(Tdata , Tdata );//si sob iguales o no
+int  equals_set(Tdata , Tdata );//si son iguales o no
 
 #endif

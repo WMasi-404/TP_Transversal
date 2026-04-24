@@ -6,7 +6,7 @@ Cadena cadena_crear() {
 
 void cadena_agregar(Cadena* cadena, char c) {
     Cadena nuevo = malloc(sizeof(Cadena));
-    nuevo->Dato = c;
+    nuevo->dato = c;
     nuevo->sig = NULL;
 
     if (*cadena == NULL) { 
@@ -15,16 +15,16 @@ void cadena_agregar(Cadena* cadena, char c) {
     }
 
     Cadena aux = *cadena;//sino agrego al final 
-    while (aux->sig != NULL)
+    while (aux->sig != NULL)//recorro hasta el final de la cadena
         aux = aux->sig;
 
     aux->sig = nuevo;
 }
 
-void cadena_desde_string(Cadena* cadena, char* texto) {
+void cadena_desde_string(Cadena* cadena, char* texto) {//char* texto es la cadena de caracteres que quiero convertir a mi estructura de cadena enlazada
     int i = 0;
     while (texto[i] != '\0') { //ingreso el texto 
-        cadena_agregar(cadena, texto[i]);
+        cadena_agregar(cadena, texto[i]);//llamada recursiva para agregar cada caracter de la cadena de texto a la estructura de cadena enlazada
         i++;
     }
 }
@@ -89,3 +89,28 @@ Cadena load2(char* texto) {
     return cadena;
 }   
 
+Cadena load2(Cadena original) {//load2 es para cargar una cadena a partir de otra cadena, es decir hacer una copia de la cadena original
+    Cadena nueva = cadena_crear();//creo una nueva cadena vacia
+    Cadena aux = original;
+
+    while(aux != NULL) {
+        cadena_agregar(&nueva, aux->Dato);//agrego cada caracter de la cadena original a la nueva cadena
+        aux = aux -> sig;
+    }
+    return nueva;
+}
+
+int cadena_comparar(Cadena c1, Cadena c2) {
+    Cadena aux1 = c1;
+    Cadena aux2 = c2;
+
+    while(aux1 != NULL && aux2 != NULL){//recorro ambas cadenas 
+        if(aux1->Dato != aux2 ->Dato) return 1;//si encuentro  un caracter distinto retorno 1
+        aux1 = aux1 -> sig;
+        aux2 = aux2 -> sig;
+    }
+    
+    if(aux1 == NULL && aux2 == NULL) return 0;//si ambas cadenas llegaron al final al mismo tiempo  entonces son iguales
+
+   return 1;//si una de las cadenas llego al final antes que la otra entonces son distintas
+}

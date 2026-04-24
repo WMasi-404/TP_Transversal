@@ -16,5 +16,8 @@ void cadena_desde_string(Cadena* cadena, char* texto);
 void cadena_eliminar_vocales(Cadena* cadena);
 void cadena_imprimir(Cadena cadena);
 void cadena_destruir(Cadena* cadena);
+Cadena load2(Cadena oringinal);
+int cadena_comparar(Cadena c1, Cadena c2);
+
 
 #endif 
