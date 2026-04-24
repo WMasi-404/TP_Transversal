@@ -1,4 +1,4 @@
-#ifndef TAD_AST_H
+-#ifndef TAD_AST_H
 #define TAD_AST_H
 #include "TAD_cadena.h"
 #include <stdio.h>
@@ -8,8 +8,7 @@
 #define STR 1
 #define SET 2
 #define LIST 3
-
-typedef char* str;
+    typedef char* str; //defino un nuevo tipo de dato para las cadenas de caracteres
     /*Estructura de un nodo*/
     typedef struct dataType{
         int nodeType;
@@ -33,7 +32,7 @@ void append_set(Tdata*, Tdata);//ya esta implementada
 
 /* print */
 void printSet(Tdata);//ya esta implementada
-void print_string(Tdata);//deberia estar en TAD CADENA
+void print_string(str);//deberia estar en TAD CADENA
 void printList(Tdata);        
 
 /*funciones para LIST*/

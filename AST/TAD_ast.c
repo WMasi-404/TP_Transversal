@@ -233,5 +233,4 @@ int belongs(Tdata set, Tdata elem){
         }
         act = act->next;
     }
-    return b;
-}
+    return b;    }

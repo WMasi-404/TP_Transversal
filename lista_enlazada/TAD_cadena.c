@@ -6,7 +6,7 @@ Cadena cadena_crear() {
 
 void cadena_agregar(Cadena* cadena, char c) {
     Cadena nuevo = malloc(sizeof(Cadena));
-    nuevo->dato = c;
+    nuevo->Dato = c;
     nuevo->sig = NULL;
 
     if (*cadena == NULL) { 
@@ -82,4 +82,10 @@ void cadena_destruir(Cadena* cadena) {
 
     (*cadena) = NULL;
 }
+
+Cadena load2(char* texto) {
+    Cadena cadena = NULL;
+    cadena_desde_string(&cadena, texto);
+    return cadena;
+}   
 
