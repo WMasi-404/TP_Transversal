@@ -8,6 +8,7 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
+      "preLaunchTask": "build all TADs",
       "cwd": "/home/wmasi_404/LAS/TCI/TP_Transversal/AST",
       "program": "/home/wmasi_404/LAS/TCI/TP_Transversal/AST/build/Debug/outDebug",
       "MIMode": "gdb",

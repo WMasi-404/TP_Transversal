@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build all TADs",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "mkdir -p \"${workspaceFolder}/AST/build/Debug\" && gcc -g -I\"${workspaceFolder}\" \"${workspaceFolder}/IA.c\" \"${workspaceFolder}/AST/TAD_ast.c\" \"${workspaceFolder}/lista_enlazada/TAD_lista.c\" \"${workspaceFolder}/lista_enlazada/TAD_pila.c\" \"${workspaceFolder}/lista_enlazada/TAD_cola.c\" \"${workspaceFolder}/lista_enlazada/TAD_cadena.c\" \"${workspaceFolder}/lista_enlazada/TAD_caracter.c\" -o \"${workspaceFolder}/AST/build/Debug/outDebug\""
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "presentation": {
+        "reveal": "always",
+        "echo": true,
+        "focus": false,
+        "panel": "shared"
+      }
+    }
+  ]
+}
