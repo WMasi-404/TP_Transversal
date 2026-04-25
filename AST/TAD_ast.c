@@ -134,6 +134,29 @@ void printSet(Tdata A){
     printf(" }");
 }
 
+void printList(Tdata list) {
+    if (list == NULL) {
+        printf("[]");
+        return;
+    }
+    printf("[ ");
+    Tdata aux = list;
+    while (aux != NULL) {
+        if (aux->data != NULL) {
+            if (aux->data->nodeType == STR) {
+                cadena_imprimir(aux->data->string);
+            } else if (aux->data->nodeType == SET) {
+                printSet(aux->data);
+            } else if (aux->data->nodeType == LIST) {
+                printList(aux->data);
+            }
+            if (aux->next != NULL) printf(", ");
+        }
+        aux = aux->next;
+    }
+    printf(" ]");
+}
+
 int length(Tdata list){//longitud de la lista
     int contador = 0;
     Tdata actual = list;
