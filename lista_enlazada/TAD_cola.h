@@ -3,12 +3,15 @@
     #include <stdio.h>
     #include <stdlib.h>
 
-    typedef struct nodo{
-        int Dato;
-        struct nodo* sig;
-    }T_nodo;
+    typedef struct Nodo {
+        int dato;
+        struct Nodo* sig;
+    } Nodo;
 
-    typedef T_nodo* Cola;
+    typedef struct {
+        Nodo* frente;
+        Nodo* final;
+    } Cola;
 
     /*Funciones Publicas*/
 
@@ -18,6 +21,5 @@
     int cola_frente(Cola);
     int cola_vacia(Cola);
     void cola_destruir(Cola*);
-    
 
 #endif

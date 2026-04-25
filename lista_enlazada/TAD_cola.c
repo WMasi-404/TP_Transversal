@@ -1,50 +1,63 @@
 #include "TAD_cola.h"
 
-Cola cola_crear(){
-    return NULL;
+Cola cola_crear() {
+    Cola c;
+    c.frente = NULL;
+    c.final = NULL;
+    return c;
 }
 
-void cola_encolar(Cola* cola, int valor){
-    Cola nvo,aux;
-    nvo = (Cola)(malloc(sizeof(T_nodo)));
-    if(nvo != NULL){
-        nvo->Dato = valor;
-        nvo->sig = NULL;
-        if((*cola) == NULL)   (*cola) = nvo;
-        else{
-            aux = *cola;
-            while(aux->sig != NULL)  aux=aux->sig;
-            aux->sig = nvo;
-        }    
+void cola_encolar(Cola* cola, int valor) {
+    Nodo* nvo = (Nodo*)malloc(sizeof(Nodo));
+    if (nvo == NULL) {
+        printf("---ERROR AL ASIGNAR MEMORIA---\n");
+        return;
     }
-    else    printf("---ERROR AL ASIGNAR MEMORIA---");
+    nvo->dato = valor;
+    nvo->sig = NULL;
+
+    if (cola->frente == NULL) {
+        // Cola vacía
+        cola->frente = nvo;
+        cola->final = nvo;
+    } else {
+        // Agregar al final
+        cola->final->sig = nvo;
+        cola->final = nvo;
+    }
 }
 
-int cola_desencolar(Cola* cola){
-    Cola aux;
-    int D;
-    D = (*cola)->Dato;
-    aux = *cola;
-    (*cola) = (*cola)->sig;
+int cola_desencolar(Cola* cola) {
+    if (cola_vacia(*cola)) {
+        printf("---ERROR: Cola vacía---\n");
+        return -1; // Valor de error
+    }
+    Nodo* aux = cola->frente;
+    int dato = aux->dato;
+    cola->frente = cola->frente->sig;
+    if (cola->frente == NULL) {
+        cola->final = NULL; // Cola quedó vacía
+    }
     free(aux);
-
-    return D;
+    return dato;
 }
 
-int cola_frente(Cola c){
-   return c->Dato; 
+int cola_frente(Cola cola) {
+    if (cola_vacia(cola)) {
+        printf("---ERROR: Cola vacía---\n");
+        return -1; // Valor de error
+    }
+    return cola.frente->dato;
 }
 
-int cola_vacia(Cola cola){
-    if(cola != NULL)    return 1;
-    else    return 0;
+int cola_vacia(Cola cola) {
+    return cola.frente == NULL;
 }
 
-void cola_destruir(Cola* c){
-    while((*c) != NULL){
-        int i;
-        i = cola_desencolar(c);
-        printf("Desencolando... %d\n",i);
+void cola_destruir(Cola* cola) {
+    while (!cola_vacia(*cola)) {
+        int dato = cola_desencolar(cola);
+        printf("Desencolando... %d\n", dato);
     }
 }
 
