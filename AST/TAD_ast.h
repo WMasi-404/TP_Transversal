@@ -35,7 +35,7 @@ void append_set(Tdata*, Tdata);//ya esta implementada
 /* print */
 void printSet(Tdata);//ya esta implementada
 void print_string(str);//deberia estar en TAD CADENA
-void printList(Tdata);        
+void printList(Tdata);
 
 /*funciones para LIST*/
 void append_list(Tdata*, Tdata); //ya esta implementado
@@ -49,7 +49,7 @@ void insert_set(Tdata*, Tdata);//ya esta implementada
 int  belongs(Tdata , Tdata );//(1 si encontró, 0 si no), ya esta implementada
 void remove_set(Tdata* , Tdata);//ya esta implementada
 int subset(Tdata, Tdata);
-int equals_set(Tdata, Tdata);
+int equals_set(Tdata, Tdata);   //Devuelve si son iguales o no
 Tdata union_set(Tdata , Tdata );  
 Tdata intersection_set(Tdata , Tdata );
 Tdata difference_set(Tdata , Tdata );

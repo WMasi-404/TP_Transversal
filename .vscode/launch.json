@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/wmasi_404/TCI/TP_Transversal",
-      "program": "/home/wmasi_404/TCI/TP_Transversal/build/Debug/outDebug",
+      "cwd": "/home/wmasi_404/LAS/TCI/TP_Transversal/AST",
+      "program": "/home/wmasi_404/LAS/TCI/TP_Transversal/AST/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

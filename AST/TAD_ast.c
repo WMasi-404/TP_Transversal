@@ -254,7 +254,7 @@ int belongs(Tdata set, Tdata elem){
     int b = 0;
     Tdata act = set;
     while(act != NULL && b != 1){
-        if(act -> data == elem -> data){
+        if(equals(act->data, elem)){
             b = 1;
         }
         act = act->next;
@@ -263,7 +263,9 @@ int belongs(Tdata set, Tdata elem){
 }
 
 void insert_set(Tdata *A, Tdata e) {
-    append_set(A, e);
+    if(!belongs(*A, e)){
+        append_set(A, e);
+    }
 }
 
 void remove_set(Tdata *set, Tdata elem) {
@@ -294,4 +296,43 @@ int subset(Tdata A, Tdata B) {
 
 int equals_set(Tdata A, Tdata B) {
     return equals(A, B);
+}
+
+Tdata union_set(Tdata A, Tdata B) {
+    Tdata resultado = NULL;
+    Tdata aux = A;
+    while (aux != NULL) {
+        insert_set(&resultado, aux->data);
+        aux = aux->next;
+    }
+    aux = B;
+    while (aux != NULL) {
+        insert_set(&resultado, aux->data);
+        aux = aux->next;
+    }
+    return resultado;
+}
+
+Tdata intersection_set(Tdata A, Tdata B) {
+    Tdata resultado = NULL;
+    Tdata aux = A;
+    while (aux != NULL) {
+        if (belongs(B, aux->data)) {
+            insert_set(&resultado, aux->data);
+        }
+        aux = aux->next;
+    }
+    return resultado;
+}
+
+Tdata difference_set(Tdata A, Tdata B) {
+    Tdata resultado = NULL;
+    Tdata aux = A;
+    while (aux != NULL) {
+        if (!belongs(B, aux->data)) {
+            insert_set(&resultado, aux->data);
+        }
+        aux = aux->next;
+    }
+    return resultado;
 }
