@@ -9,7 +9,6 @@
     #define SET 2
     #define LIST 3
 
-    typedef char* str;
     /*Estructura de un nodo*/
     typedef struct dataType{
         int nodeType;
