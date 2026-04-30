@@ -1,5 +1,4 @@
 #include "TAD_ast.h"
-<<<<<<< HEAD
 #include <stdio.h>
  
 /* ── utilidad para crear un nodo STR con contenido ── */
@@ -7,7 +6,6 @@ Tdata make_str(const char* texto) {
     Tdata n = create_str_ast();
     cadena_desde_string(&n->string, (char*)texto);
     return n;
-=======
 #include <string.h>
 
 int main() {
@@ -129,7 +127,6 @@ int main() {
     printSet(B);
     printf("\nC (clone): ");
     printSet(C)
->>>>>>> 3fcf62739a3fea50662ad4bef55d8e3f6b3335bd
 }
  
 /* ── imprime un par (LIST de dos elementos) ── */
