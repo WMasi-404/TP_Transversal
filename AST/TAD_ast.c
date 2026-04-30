@@ -287,15 +287,15 @@ void remove_set(Tdata *set, Tdata elem) {
 
 /*new
 Tdata product_cartesiano(Tdata A, Tdata B){
-    Tdata producto,auxB,pares;
+    Tdata producto,auxB,auxA,pares;
     producto=create_set();
     auxA=A;
     while(auxA!= NULL){
         auxB=B;
         while(auxB!= NULL){
             pares=create_list();
-            append_list(pares,clone(auxA->data));
-            append_list(pares,clone(auxB->data));
+            append_list(&pares,clone(auxA->data));
+            append_list(&pares,clone(auxB->data));
             if(!belongs(producto,pares))
                 append_set(&producto,pares);
             auxB=auxB->next;
