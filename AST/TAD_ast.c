@@ -349,3 +349,68 @@ Tdata difference_set(Tdata A, Tdata B) {
     }
     return resultado;
 }
+
+Tdata str_to_list(Tdata str_node) {
+    Tdata lista = NULL;
+    Cadena aux = str_node->string;
+
+    while (aux != NULL) {
+        Tdata nuevo = create_str_ast();// 1. Crear un Tdata STR nuevo
+        cadena_agregar(&nuevo->string, aux->Dato);// 2. Cargar solo el carácter aux->Dato en su cadena
+        append_list(&lista,nuevo);// 3. Appendearlo a lista
+        aux = aux -> sig;
+    }
+    return lista;
+}
+
+Tdata list_to_str(Tdata lista){
+    Tdata str_node = create_str_ast(); // 1. Crear un Tdata STR nuevo
+    Tdata aux = lista;
+
+    while (aux != NULL) {
+        if (aux->data != NULL && aux->data->nodeType == STR && aux->data->string != NULL) {
+            Cadena c = aux->data->string;
+            if (c != NULL) {
+                cadena_agregar(&str_node->string, c->Dato); // 2. Agregar el carácter de cada nodo STR de la lista a la cadena del nodo STR resultante
+            }
+        }
+        aux = aux -> next;
+    }
+    return str_node; // 3. Retornar el nodo STR resultante
+}
+
+Tdata product_cartesiano(Tdata A, Tdata B) {
+    Tdata resultado = NULL;
+    Tdata auxA = A;
+
+    while (auxA != NULL) {
+        Tdata auxB = B;
+        while (auxB != NULL) {
+            Tdata nodo_a = create_list();
+            nodo_a->data = clone(auxA->data); /* ← clon, no referencia */
+            nodo_a->next = NULL;
+
+            Tdata nodo_b = create_list();
+            nodo_b->data = clone(auxB->data); /* ← clon, no referencia */
+            nodo_b->next = NULL;
+
+            nodo_a->next = nodo_b;
+
+            Tdata nodo_set = create_set();
+            nodo_set->data = nodo_a;
+            nodo_set->next = NULL;
+
+            if (resultado == NULL) {
+                resultado = nodo_set;
+            } else {
+                Tdata tail = resultado;
+                while (tail->next != NULL) tail = tail->next;
+                tail->next = nodo_set;
+            }
+
+            auxB = auxB->next;
+        }
+        auxA = auxA->next;
+    }
+    return resultado;
+}

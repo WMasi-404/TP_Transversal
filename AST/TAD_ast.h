@@ -33,7 +33,7 @@
 
     /* print */
     void printSet(Tdata);                                   //ya esta implementada
-    void print_string(str);                                 //deberia estar en TAD CADENA
+    void print_string(Cadena);                                 //deberia estar en TAD CADENA
     void printList(Tdata);                                  /*muestra lista*/
 
     /*funciones para LIST*/
@@ -54,5 +54,7 @@
     Tdata difference_set(Tdata , Tdata );                   /*Diferencia de conjuntos*/
     int subset(Tdata , Tdata );                             //Devuelve si es subconjunto:
     int  equals_set(Tdata , Tdata );                        //si son iguales o no
-
+    Tdata str_to_list(Tdata );                              //Convierte un nodo STR a una lista de caracteres, cada nodo de la lista contiene un STR con un solo caracter
+    Tdata list_to_str(Tdata );    
+    Tdata product_cartesiano(Tdata, Tdata);                          
 #endif
