@@ -6,10 +6,13 @@ Tdata make_str(const char* texto) {
     Tdata n = create_str_ast();
     cadena_desde_string(&n->string, (char*)texto);
     return n;
- 
+}
 /* ── imprime un par (LIST de dos elementos) ── */
 void print_par(Tdata par) {
-    if (par == NULL) { printf("()"); return; }
+    if (par == NULL){ 
+        printf("()");
+        return;
+    }
     printf("(");
     if (par->data != NULL && par->data->nodeType == STR)
         cadena_imprimir(par->data->string);
@@ -22,7 +25,10 @@ void print_par(Tdata par) {
  
 /* ── imprime el resultado del producto cartesiano ── */
 void print_producto(Tdata prod) {
-    if (prod == NULL) { printf("{}\n"); return; }
+    if (prod == NULL) {
+        printf("{}\n"); 
+        return; 
+    }
     printf("{ ");
     Tdata aux = prod;
     while (aux != NULL) {
@@ -47,8 +53,10 @@ int main() {
     insert_set(&B, make_str("2"));
     insert_set(&B, make_str("3"));
  
-    printf("A: ");        printSet(A); printf("\n");
-    printf("B: ");        printSet(B); printf("\n");
+    printf("A: ");
+    printSet(A); printf("\n");
+    printf("B: ");
+    printSet(B); printf("\n");
  
     printf("Union A|B: ");
     printSet(union_set(A, B));
@@ -73,8 +81,12 @@ int main() {
     insert_set(&Q, make_str("1"));
     insert_set(&Q, make_str("2"));
  
-    printf("P: "); printSet(P); printf("\n");
-    printf("Q: "); printSet(Q); printf("\n");
+    printf("P: "); 
+    printSet(P); 
+    printf("\n");
+    printf("Q: "); 
+    printSet(Q); 
+    printf("\n");
 
     printf("antes de producto\n");
 
@@ -116,8 +128,12 @@ int main() {
     insert_set(&C, make_str("a"));
     insert_set(&C, make_str("b"));
  
-    printf("C: ");     printSet(C);     printf("\n");
-    printf("Vacio: "); printSet(vacio); printf("\n");
+    printf("C: ");
+    printSet(C);
+    printf("\n");
+    printf("Vacio: ");
+    printSet(vacio);
+    printf("\n");
  
     printf("Union C|vacio: ");
     printSet(union_set(C, vacio));
@@ -154,8 +170,10 @@ int main() {
     Tdata lista1 = str_to_list(make_str("hola"));
     Tdata lista2 = str_to_list(make_str("pepe"));
  
-    printf("Lista 1: "); printList(lista1); printf("\n");
-    printf("Lista 2: "); printList(lista2); printf("\n");
+    printf("Lista 1: ");
+    printList(lista1); printf("\n");
+    printf("Lista 2: ");
+    printList(lista2); printf("\n");
  
     append_list(&lista1, lista2);
     printf("Lista 1 con Lista 2 anidada: ");
@@ -169,15 +187,21 @@ int main() {
     insert_set(&original, make_str("20"));
  
     Tdata referencia = original;           /* mismo puntero, memoria compartida */
-    Tdata copia      = clone(original);    /* memoria independiente             */
+    Tdata copia = clone(original);    /* memoria independiente             */
  
     insert_set(&copia, make_str("99"));    /* modificamos solo la copia         */
  
-    printf("Original:   "); printSet(original);  printf("\n");
-    printf("Referencia: "); printSet(referencia); printf("\n");
-    printf("Copia (con 99 agregado): "); printSet(copia); printf("\n");
+    printf("Original:   "); 
+    printSet(original);
+    printf("\n");
+    printf("Referencia: ");
+    printSet(referencia);
+    printf("\n");
+    printf("Copia (con 99 agregado): ");
+    printSet(copia);
+    printf("\n");
     printf("Original intacto (no tiene 99): %s\n\n",
-           !belongs(original, make_str("99")) ? "SI" : "NO");
+    !belongs(original, make_str("99")) ? "SI" : "NO");
  
     printf("Pruebas finalizadas!\n");
     return 0;
