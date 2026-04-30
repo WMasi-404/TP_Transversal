@@ -12,22 +12,22 @@ int main() {
     insert_set(&A, create_str_ast("2"));
     insert_set(&B, create_str_ast("2"));
     insert_set(&B, create_str_ast("3"));
-    printf("A: "); print_set(A);
-    printf("B: "); print_set(B);
+    printf("A: "); printSet(A);
+    printf("B: "); printSet(B);
     printf("Union: ");
-    print_set(union_set(A, B));
+    printSet(union_set(A, B));
     printf("\n");
     printf("Interseccion: ");
-    print_set(intersection_set(A, B));
+    printSet(intersection_set(A, B));
     printf("\n");
     printf("Diferencia: ");
-    print_set(difference_set(A,B));
+    printSet(difference_set(A,B));
     printf("\n");
     printf("PRODUCTO CARTESIANO \n");
     Tdata P;
     P = product_cartesiano(A, B);
     printf("A x B: ");
-    print_set(P);
+    printSet(P);
     printf("\n");
     printf("\n");
 //[abc]->[d]=[adbdcd] usar append y belongs
@@ -58,22 +58,22 @@ int main() {
    
     insert_set(&B, create_str_ast("c"));
     insert_set(&B, create_str_ast("d"));
-    printf("A: "); print_set(A);
-    printf("B: "); print_set(B);
-    printf("V: "); print_set(Vacio);
-    printf("Vacio: "); print_set(Vacio);
+    printf("A: "); printSet(A);
+    printf("B: "); printSet(B);
+    printf("V: "); printSet(Vacio);
+    printf("Vacio: "); printSet(Vacio);
     printf("Union: ");
-    print_set(union_set(A, Vacio));
+    printSet(union_set(A, Vacio));
     printf("Interseccion: ");
-    print_set(intersection_set(A, Vacio));
+    printSet(intersection_set(A, Vacio));
     printf("Diferencia A-Vacio: ");
-    print_set(difference_set(A,Vacio));
+    printSet(difference_set(A,Vacio));
     printf("Diferencia Vacio-A: ");
-    print_set(difference_set(Vacio,A));
+    printSet(difference_set(Vacio,A));
     printf("A x Vacio: ");
-    print_set(product_cartesiano(A,Vacio))
+    printSet(product_cartesiano(A,Vacio))
     printf("Vacio x A: ");
-    print_set(product_cartesiano(Vacio,A))
+    printSet(product_cartesiano(Vacio,A))
     printf("\n");
     printf("\n");
     */
@@ -88,21 +88,21 @@ int main() {
     insert_set(&D, create_str_ast("3"));
     D=create_set();
     printf("Conjunto (sin duplicados): ");
-    print_set(D);
+    printSet(D);
     printf("\n"); printf("\n);
     */
     // equals,belongs y append  --->   [1,2,3]
     /*printf("LISTAS ANIDADAS\n");
-    Tdata Lista1,Lista2
-    Lista1=str_to_list(create_str("hola"));
-    Lista2=str_to_list(create_str("pepe"));
+    Tdata Lista,sublista;
+    Lista=create_list();
+    sublista=create_list();
+    append_list(Lista,create_str_ast("h"));
+    append_list(Lista,create_str_ast("o"));
+    append_list(sublista,create_str_ast("l"));
+    append_list(sublista,create_str_ast("a"));
+    append_list(Lista,sublista)
     printf("Lista 1: ");
-    print_list(L1);
-    printf("Lista 2: ");
-    print_list(L2);
-    insert_list(L1, L2);
-    printf("\nLista 1 con Lista 2 anidada: ");
-    print_list(L1);
+    printList(Lista);
     printf("\n");printf("\n");
     */
     /*
@@ -114,9 +114,12 @@ int main() {
     insert_set(&O, create_str_ast("10"));
     insert_set(&C, create_int(20));
 
-    printf("A: "); print_set(A);
-    printf("\nB (ref): "); print_set(B);
-    printf("\nC (clone): "); print_set(C)
+    printf("A: "); 
+    printSet(A);
+    printf("\nB (ref): "); 
+    printSet(B);
+    printf("\nC (clone): ");
+    printSet(C)
 }
     return 0;
 }
