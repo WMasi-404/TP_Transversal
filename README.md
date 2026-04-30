@@ -4,3 +4,4 @@ Bueno Aqui vamos a comenzar el trabajo practico transversal de la materia Teoria
 
 Aqui el comando para correr el main con los Tads:
 
+gcc -I./AST -I./lista_enlazada ./lista_enlazada/*.c ./AST/*.c -o testeo_presentar_ast.exe
