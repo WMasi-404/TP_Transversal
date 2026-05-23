@@ -1,12 +1,6 @@
 #include "TAD_ast.h"
 #include <stdio.h>
  
-/* ── utilidad para crear un nodo STR con contenido ── */
-Tdata make_str(const char* texto) {
-    Tdata n = create_str_ast();
-    cadena_desde_string(&n->string, (char*)texto);
-    return n;
-}
 /* ── imprime un par (LIST de dos elementos) ── */
 void print_par(Tdata par) {
     if (par == NULL){ 

@@ -23,6 +23,7 @@
 
     int equals(Tdata, Tdata);                               /* comparador general, usado internamente */
     /*Creacion de los nodos */
+    Tdata make_str(const char*);
     Tdata create_str_ast();                                 //ya esta implementada
     Tdata create_set();                                     //ya esta implementada
     Tdata create_list();                                    //ya esta implementada

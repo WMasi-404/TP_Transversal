@@ -1,5 +1,11 @@
 #include "TAD_ast.h"
 
+Tdata make_str(const char* texto) {
+    Tdata n = create_str_ast();
+    cadena_desde_string(&n->string, (char*)texto);
+    return n;
+}
+
 Tdata create_str_ast(){
     Tdata n = (Tdata)malloc(sizeof(struct dataType));//reservo memoria
     n->nodeType = STR;//le asgino el tipo STR
