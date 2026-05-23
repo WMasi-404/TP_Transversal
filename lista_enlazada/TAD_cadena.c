@@ -67,7 +67,6 @@ void cadena_imprimir(Cadena cadena) {
         printf("%c", aux->Dato);
         aux = aux->sig;
     }
-    printf("\n");
 }
 
 void cadena_destruir(Cadena* cadena) {
