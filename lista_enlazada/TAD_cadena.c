@@ -5,7 +5,7 @@ Cadena cadena_crear() {
 }
 
 void cadena_agregar(Cadena* cadena, char c) {
-    Cadena nuevo = malloc(sizeof(Cadena));
+    Cadena nuevo = malloc(sizeof(*nuevo)); //creo un nuevo nodo
     nuevo->Dato = c;
     nuevo->sig = NULL;
 
