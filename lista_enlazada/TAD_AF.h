@@ -27,6 +27,7 @@ typedef struct transition{
 	int deterministic;
 } Automata;
 Automata cargarAF();
+void printAF(Automata);
 StateNode* crear_estado(State ,int );
 StateNode* buscar_estado(Automata* ,State );
 void agregar_estado(Automata*,StateNode*);

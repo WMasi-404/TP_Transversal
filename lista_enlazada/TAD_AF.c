@@ -29,97 +29,220 @@ nuevo->to=clone(to);
 nuevo->next=A->transitions;
 A->transitions=nuevo;
 }
-Automata cargarAF() {
-char ele[50];
-Automata A;
-State s;
-StateNode* nuevo;
-int n, t, i;
 
-A.states = NULL;
-
-printf("Cantidad de estados: ");
-scanf("%d", &n);
-
-for (i = 1; i <= n; i++) {
-
-printf("Nombre del estado: ");
-scanf("%s", ele);
-
- s = make_str(ele);
-
-printf("Es final ? (1=SI, 0=NO): ");
-int esFinal;
-scanf("%d", &esFinal);
-
-nuevo = crear_estado(s, esFinal);
-agregar_estado(&A, nuevo);
-}
-
-printf("Estado inicial: ");
-scanf("%s", ele);
-A.q0 = make_str(ele);
-
-printf("Cantidad de transiciones: ");
-scanf("%d", &t);
-
-for (i = 1; i <= t; i++) {
-
-char from[50];
-char symbol[50];
-char to[50];
-
-printf("Transicion %d (origen simbolo destino):\n", i);
-
-printf("Origen: ");
-scanf("%s", from);
-
-printf("Simbolo: ");
-scanf("%s", symbol);
-
-printf("Destino/s: ");
-scanf("%s", to);
-
-StateNode* estadoOrigen = buscar_estado(&A, make_str(from));
-
-if (estadoOrigen == NULL) {
-
-printf("Estado origen no existe\n");
-
-} else {
-
-Tdata destinos = create_set();
-
-char estado[50];
-int j = 0;
-int k = 0;
-
-while (to[k] != '\0') {
-	
-	if (to[k] == ',') {
+	Automata cargarAF() {
+		Automata A;
+		A.states = NULL;
 		
-		estado[j] = '\0';
-		
-		insert_set(&destinos, make_str(estado));
+		char c;
+		char ca[50];
+		int j;
+		do {
+			scanf("%c", &c);
+		} while (c != '(');
+		scanf(" %c", &c); 
 		
 		j = 0;
+		scanf("%c", &c);
 		
-	} else {
+		while (c != '}') {
+			
+			if (c == ',') {
+				ca[j] = '\0';
+				agregar_estado(&A,crear_estado(make_str(ca), 0));
+				
+				j = 0;
+			} else {
+				ca[j++] = c;
+			}
+			
+			scanf("%c", &c);
+		}
 		
-		estado[j] = to[k];
-		j++;
+		ca[j] = '\0';
+		
+		agregar_estado(&A,crear_estado(make_str(ca), 0));
+		
+		do {
+			scanf("%c", &c);
+		} while (c != '{');
+		
+		do {
+			scanf("%c", &c);
+		} while (c != '}');
+		
+		do {
+			scanf("%c", &c);
+		} while (c != '{');
+		
+		scanf(" %c", &c);
+		
+		while (c != '}') {
+			
+			if (c == '(') {
+				
+				char from[50];
+				char symbol[50];
+				j = 0;
+				scanf("%c", &c);
+				
+				while (c != ',') {
+					from[j++] = c;
+					scanf("%c", &c);
+				}
+				
+				from[j] = '\0';
+				j = 0;
+				scanf("%c", &c);
+				
+				while (c != ',') {
+					symbol[j++] = c;
+					scanf("%c", &c);
+				}
+				
+				symbol[j] = '\0';
+				
+				Tdata destinos = create_set();
+				
+				scanf("%c", &c);
+				if (c == '{') {
+					
+					char to[50];
+					
+					j = 0;
+					scanf("%c", &c);
+					
+					while (c != '}') {
+						
+						if (c == ',') {
+							
+							to[j] = '\0';
+							insert_set(&destinos, make_str(to));
+							
+							j = 0;
+						} else {
+							to[j++] = c;
+						}
+						
+						scanf("%c", &c);
+					}
+					
+					to[j] = '\0';
+					insert_set(&destinos, make_str(to));
+					
+					scanf("%c", &c); 
+				}
+				else {
+					
+					char to[50];
+					
+					j = 0;
+					
+					while (c != ')') {
+						to[j++] = c;
+						scanf("%c", &c);
+					}
+					
+					to[j] = '\0';
+					
+					insert_set(&destinos, make_str(to));
+				}
+				
+				Tdata origenBuscado = make_str(from);
+				
+				StateNode* origen =
+					buscar_estado(&A, origenBuscado);
+				
+				if (origen != NULL) {
+					agregaTransicion(origen,make_str(symbol),destinos);
+				}
+			}
+			
+			scanf(" %c", &c);
+		}
+		
+		do{
+			scanf(" %c", &c);
+		} while(c == ','||c==' ');
+		j = 0;
+		
+		while (c != ',') {
+			ca[j++] = c;
+			scanf("%c", &c);
+		}
+		
+		ca[j] = '\0';
+		
+		A.q0 = make_str(ca);
+		
+		scanf(" %c", &c); 
+		j = 0;
+		scanf("%c", &c);
+		
+		while (c != '}') {
+			
+			if (c == ',') {
+				
+				ca[j] = '\0';
+				
+				Tdata buscado = make_str(ca);
+				
+				StateNode* e =buscar_estado(&A, buscado);
+				if (e != NULL)
+					e->isFinal = 1;
+				j = 0;
+			} else {
+				ca[j++] = c;
+			}
+			
+			scanf("%c", &c);
+		}
+		
+		ca[j] = '\0';
+		
+		Tdata buscado = make_str(ca);
+		
+		StateNode* e =
+			buscar_estado(&A, buscado);
+		
+		if (e != NULL)
+			e->isFinal = 1;
+		
+		return A;
 	}
-	
-	k++;
-}
-
-estado[j] = '\0';
-
-insert_set(&destinos, make_str(estado));
-
-agregaTransicion(estadoOrigen,make_str(symbol),destinos);
-}
-}
-
-return A;
-}
+void printAF(Automata A){
+		printf("\n--- AUTOMATA ---\n");
+		
+		StateNode* e = A.states;
+		
+		while (e != NULL){
+			printf("\nEstado: ");
+			
+			printList(str_to_list(e->name));
+			
+			if (e->isFinal)
+				printf(" | Final: SI\n");
+			else
+				printf(" | Final: NO\n");
+			
+			Transition* t = e->transitions;
+			
+			while (t != NULL){
+				printf("          --");
+				
+				printList(str_to_list(t->symbol));
+				printf("--> ");
+				printSet(t->to);
+				
+				printf("\n");
+				
+				t = t->next;
+			}
+			
+			e = e->next;
+		}
+		
+		printf("\nEstado inicial: ");
+		printList(str_to_list(A.q0));
+		printf("\n");
+	}
