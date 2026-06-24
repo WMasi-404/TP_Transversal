@@ -6,15 +6,15 @@ int main() {
     printAF(afnd);
 
     DFA afd = convertirAFND(afnd);
-    printf("\n--- DFA antes de renombrar ---\n");
+    printf("\n--- AFD antes de renombrar ---\n");
     printDFA(&afd);
 
     renombrarEstados(&afd, afnd);
-    printf("\n--- DFA renombrado ---\n");
+    printf("\n--- AFD renombrado ---\n");
     printDFA(&afd);
 
     obtenerOperativos(&afd, afnd);
-    printf("\n--- DFA operativos ---\n");
+    printf("\n--- AFD operativos ---\n");
     printDFA(&afd);
 
     return 0;

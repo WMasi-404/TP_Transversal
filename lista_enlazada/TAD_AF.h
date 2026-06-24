@@ -36,8 +36,8 @@ StateNode* buscar_estado(Automata* ,State );
 void agregar_estado(Automata*,StateNode*);
 void agregaTransicion(StateNode*,Symbol,State);
 
-typedef struct{// esto es para el DFA,DFA es un automata finito determinista, entonces cada estado es un conjunto de estados del AF
-    Tdata subset;// conjunto de estados del AF que representa este estado del DFA 
+typedef struct{// esto es para el AFD, AFD es un automata finito determinista, entonces cada estado es un conjunto de estados del AF
+    Tdata subset;// conjunto de estados del AF que representa este estado del AFD 
 } CompositeState;
 
 typedef struct{
@@ -47,21 +47,21 @@ typedef struct{
     
 	Tdata to;
 
-} DFA_Transition;
+} AFD_Transition;
 
 typedef struct{
     Tdata states;
 
-    DFA_Transition* delta;
+    AFD_Transition* delta;
 
     int deltaCount;
 
     CompositeState q0;
 
     Tdata F;
-} DFA;
+} AFD;
 
-DFA convertirAFND(Automata afnd);
+AFD convertirAFND(Automata afnd);
 
 Tdata mover(Automata ,Tdata ,Symbol );
 int existeEstado(Tdata ,Tdata);
@@ -72,10 +72,10 @@ typedef struct {
     Tdata subset;   // {q0, q1}  →  el subconjunto original
     Tdata nombre;   // "A"       →  el nombre nuevo
 } Mapeo;
-void renombrarEstados(DFA*,Automata);
-Tdata obtenerAccesibles(DFA*);
-Tdata obtenerProductivos(DFA*);
-void obtenerOperativos(DFA*,Automata);
-void printDFA(DFA*);
+void renombrarEstados(AFD*,Automata);
+Tdata obtenerAccesibles(AFD*);
+Tdata obtenerProductivos(AFD*);
+void obtenerOperativos(AFD*,Automata);
+void printAFD(AFD*);
 int aceptar(Automata, const char*);
 #endif

@@ -312,9 +312,9 @@ Tdata obtenerAlfabeto(Automata afnd){
     return alfabeto;
 }
 
-DFA convertirAFND(Automata afnd){
+AFD convertirAFND(Automata afnd){
 
-    DFA afd;
+    AFD afd;
 
     afd.states = NULL;
     afd.delta = NULL;
@@ -360,7 +360,7 @@ DFA convertirAFND(Automata afnd){
                         destino);
                 }
 
-				afd.delta = realloc( afd.delta,(afd.deltaCount + 1) * sizeof(DFA_Transition));
+				afd.delta = realloc( afd.delta,(afd.deltaCount + 1) * sizeof(AFD_Transition));
 
 				afd.delta[afd.deltaCount].from = clone(actual);
 				afd.delta[afd.deltaCount].symbol = clone(simbolo);
@@ -389,9 +389,9 @@ DFA convertirAFND(Automata afnd){
     return afd;
 }
 
-void renombrarEstados(DFA* afd, Automata afnd) {
+void renombrarEstados(AFD* afd, Automata afnd) {
     
-    // 1. Contar cuántos estados tiene el DFA
+    // 1. Contar cuántos estados tiene el AFD
 	int estadoCount = length(afd->states);
     // 2. Crear la tabla de mapeo con ese tamaño
 	Mapeo* mapeo = malloc(estadoCount * sizeof(Mapeo));
@@ -409,7 +409,7 @@ void renombrarEstados(DFA* afd, Automata afnd) {
 
 	// 4. Actualizar delta: reemplazar from y to por el nombre nuevo
 	for(int i = 0; i < afd->deltaCount; i++){
-		DFA_Transition* t = &afd->delta[i];
+		AFD_Transition* t = &afd->delta[i];
 
 		for(int j = 0; j < estadoCount; j++){
 			if(equals(t->from, mapeo[j].subset)){
@@ -446,7 +446,7 @@ void renombrarEstados(DFA* afd, Automata afnd) {
 	free(mapeo);//libero la memoria del mapeo ya que no lo necesito más
 }
 
-Tdata ObtenerAccesibles(DFA* afd) {
+Tdata ObtenerAccesibles(AFD* afd) {
 	Tdata accesibles = NULL;
 	Tdata pendientes = NULL;
 
@@ -457,7 +457,7 @@ Tdata ObtenerAccesibles(DFA* afd) {
 		Tdata actual = pendientes->data;
 
 		for (int i = 0; i < afd->deltaCount; i++) {
-			DFA_Transition* t = &afd->delta[i];
+			AFD_Transition* t = &afd->delta[i];
 
 			if (equals(t->from, actual)) {
 				if (!belongs(accesibles, t->to)) {
@@ -473,7 +473,7 @@ Tdata ObtenerAccesibles(DFA* afd) {
 	return accesibles;
 }
 
-Tdata ObtenerProductivos(DFA* afd) {
+Tdata ObtenerProductivos(AFD* afd) {
 	Tdata productivos = NULL;
 	Tdata pendientes = NULL;
 
@@ -488,7 +488,7 @@ Tdata ObtenerProductivos(DFA* afd) {
 		Tdata actual = pendientes->data;
 
 		for (int i = 0; i < afd->deltaCount; i++) {
-			DFA_Transition* t = &afd->delta[i];
+			AFD_Transition* t = &afd->delta[i];
 
 			if (equals(t->to, actual)) {
 				if (!belongs(productivos, t->from)) {
@@ -504,7 +504,7 @@ Tdata ObtenerProductivos(DFA* afd) {
 	return productivos;
 }
 
-void obtenerOperativos(DFA* afd, Automata afnd) {
+void obtenerOperativos(AFD* afd, Automata afnd) {
     Tdata accesibles  = ObtenerAccesibles(afd);
     Tdata productivos = ObtenerProductivos(afd);
 
@@ -528,12 +528,12 @@ void obtenerOperativos(DFA* afd, Automata afnd) {
     afd->states = nuevosStates;
 
     // 2. Filtrar delta
-    DFA_Transition* nuevaDelta = NULL;
+    AFD_Transition* nuevaDelta = NULL;
     int nuevoDeltaCount = 0;
     for (int i = 0; i < afd->deltaCount; i++) {
-        DFA_Transition* t = &afd->delta[i];
+        AFD_Transition* t = &afd->delta[i];
         if (belongs(operativos, t->from) && belongs(operativos, t->to)) {
-            nuevaDelta = realloc(nuevaDelta, (nuevoDeltaCount + 1) * sizeof(DFA_Transition));
+            nuevaDelta = realloc(nuevaDelta, (nuevoDeltaCount + 1) * sizeof(AFD_Transition));
             nuevaDelta[nuevoDeltaCount++] = *t;
         }
     }
@@ -551,8 +551,8 @@ void obtenerOperativos(DFA* afd, Automata afnd) {
     afd->F = nuevaF;
 }
 
-void printDFA(DFA* afd) {
-	printf("\n--- DFA ---\n");
+void printAFD(AFD* afd) {
+	printf("\n--- AFD ---\n");
 
 	Tdata aux = afd->states;
 	while (aux != NULL) {
@@ -567,7 +567,7 @@ void printDFA(DFA* afd) {
 
 	printf("\nTransiciones:\n");
 	for (int i = 0; i < afd->deltaCount; i++) {
-		DFA_Transition* t = &afd->delta[i];
+		AFD_Transition* t = &afd->delta[i];
 		printf("  ");
 		printList(str_to_list(t->from));
 		printf(" --");
