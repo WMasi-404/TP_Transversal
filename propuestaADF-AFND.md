@@ -27,3 +27,11 @@ destinos pero el modelo para los dos es el mismo
 las demás propuestas se quedan estancadas en la poca viabilidad con
 respecto a las estructuras de datos utilizadas y la poca
 eficiencia en sus modelos...
+
+Automatas finitos deterministas
+
+AFD que acepta cadenas que terminan en 0:
+({q0,q1}, {0,1}, {(q0,0,q1),(q0,1,q0),(q1,0,q1),(q1,1,q0)}, q0, {q1})
+
+AFND que acepta cadenas divisibles por 3 o por 6 y 2:
+({q0,q1,q2}, {0,1}, {(q0,0,{q0,q1}),(q0,1,q1),(q1,0,q2),(q1,1,q0),(q2,0,q1),(q2,1,q2)}, q0, {q0})

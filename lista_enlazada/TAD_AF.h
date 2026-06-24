@@ -72,10 +72,11 @@ typedef struct {
     Tdata subset;   // {q0, q1}  →  el subconjunto original
     Tdata nombre;   // "A"       →  el nombre nuevo
 } Mapeo;
+
 void renombrarEstados(AFD*,Automata);
 Tdata obtenerAccesibles(AFD*);
 Tdata obtenerProductivos(AFD*);
 void obtenerOperativos(AFD*,Automata);
 void printAFD(AFD*);
-int aceptar(Automata, const char*);
+int aceptar_cadena(Automata, Cadena);
 #endif

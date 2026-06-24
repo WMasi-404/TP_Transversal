@@ -582,20 +582,21 @@ void printAFD(AFD* afd) {
 	printf("\n");
 }
 
-int aceptar(Automata afnd, const char* cadena) {
+int aceptar_cadena(Automata afnd, Cadena cadena) {
 	Tdata actual = NULL;
 	insert_set(&actual, afnd.q0);
 
-	for (int i = 0; cadena[i] != '\0'; i++) {
-		char sym[2] = {cadena[i], '\0'};
+	Cadena aux = cadena;
+	while (aux != NULL) {
+		char sym[2] = {aux->Dato, '\0'};
 		Tdata simbolo = make_str(sym);
 		Tdata siguientes = mover(afnd, actual, simbolo);
 
-		if (siguientes == NULL) {
+		if (siguientes == NULL)
 			return 0;
-		}
 
 		actual = siguientes;
+		aux = aux->sig;
 	}
 
 	return contieneFinal(afnd, actual);

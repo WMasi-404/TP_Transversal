@@ -93,6 +93,14 @@ Cadena load2(Cadena original) {//load2 es para cargar una cadena a partir de otr
     return nueva;
 }
 
+Cadena leecad() {
+    Cadena c = cadena_crear();
+    char ch;
+    while ((ch = getchar()) != '\n' && ch != EOF)
+        cadena_agregar(&c, ch);
+    return c;
+}
+
 int cadena_comparar(Cadena c1, Cadena c2) {
     Cadena aux1 = c1;
     Cadena aux2 = c2;

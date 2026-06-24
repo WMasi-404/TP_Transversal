@@ -11,6 +11,7 @@ typedef struct Nodo {
 typedef T_nodo* Cadena;
 
 Cadena cadena_crear();
+Cadena leecad();
 void cadena_agregar(Cadena* cadena, char c);
 void cadena_desde_string(Cadena* cadena, char* texto);
 void cadena_eliminar_vocales(Cadena* cadena);
