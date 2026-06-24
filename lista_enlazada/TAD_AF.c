@@ -581,3 +581,22 @@ void printDFA(DFA* afd) {
 	printList(str_to_list(afd->states->data));
 	printf("\n");
 }
+
+int aceptar(Automata afnd, const char* cadena) {
+	Tdata actual = NULL;
+	insert_set(&actual, afnd.q0);
+
+	for (int i = 0; cadena[i] != '\0'; i++) {
+		char sym[2] = {cadena[i], '\0'};
+		Tdata simbolo = make_str(sym);
+		Tdata siguientes = mover(afnd, actual, simbolo);
+
+		if (siguientes == NULL) {
+			return 0;
+		}
+
+		actual = siguientes;
+	}
+
+	return contieneFinal(afnd, actual);
+}

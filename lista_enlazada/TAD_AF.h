@@ -77,4 +77,5 @@ Tdata obtenerAccesibles(DFA*);
 Tdata obtenerProductivos(DFA*);
 void obtenerOperativos(DFA*,Automata);
 void printDFA(DFA*);
+int aceptar(Automata, const char*);
 #endif
