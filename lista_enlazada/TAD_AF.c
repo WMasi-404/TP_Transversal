@@ -1,147 +1,148 @@
 #include "TAD_AF.h"
 StateNode* crear_estado(State name,int esFinal){
-StateNode* nuevo=malloc(sizeof(StateNode));
-nuevo->name=name;
-nuevo->isFinal=esFinal;
-nuevo->transitions=NULL;
-nuevo->next=NULL;
-return nuevo;
+	StateNode* nuevo=malloc(sizeof(StateNode));
+	nuevo->name=name;
+	nuevo->isFinal=esFinal;
+	nuevo->transitions=NULL;
+	nuevo->next=NULL;
+
+	return nuevo;
 }
 StateNode* buscar_estado(Automata* A,State name){
-StateNode* aux=A->states;
-StateNode* encontrado=NULL;
-while(aux!=NULL){
-if(equals(aux->name,name))
-encontrado=aux;
-aux=aux->next;
-}
-return encontrado;
+	StateNode* aux=A->states;
+	StateNode* encontrado=NULL;
+	while(aux!=NULL){
+		if(equals(aux->name,name))
+			encontrado=aux;
+			aux=aux->next;
+	}
+	
+	return encontrado;
 }
 void agregar_estado(Automata*A,StateNode*nuevo){
-nuevo->next=A->states;
-A->states=nuevo;
-
+	nuevo->next=A->states;
+	A->states=nuevo;
 }
+
 void agregaTransicion(StateNode* A,Symbol symbol,Tdata to){
-Transition* nuevo= malloc(sizeof(Transition));
-nuevo->symbol=clone(symbol);
-nuevo->to=clone(to);
-nuevo->next=A->transitions;
-A->transitions=nuevo;
+	Transition* nuevo= malloc(sizeof(Transition));
+	nuevo->symbol=clone(symbol);
+	nuevo->to=clone(to);
+	nuevo->next=A->transitions;
+	A->transitions=nuevo;
 }
 
-	Automata cargarAF() {
-		Automata A;
-		A.states = NULL;
+Automata cargarAF() {
+	Automata A;
+	A.states = NULL;
 		
-		char c;
-		char ca[50];
-		int j;
-		do {
-			scanf("%c", &c);
-		} while (c != '(');
-		scanf(" %c", &c); 
-		
-		j = 0;
+	char c;
+	char ca[50];
+	int j;
+	do {
 		scanf("%c", &c);
+	} while (c != '(');
+	scanf(" %c", &c); 
 		
-		while (c != '}') {
+	j = 0;
+	scanf("%c", &c);
+		
+	while (c != '}') {
 			
-			if (c == ',') {
-				ca[j] = '\0';
-				agregar_estado(&A,crear_estado(make_str(ca), 0));
-				
-				j = 0;
-			} else {
-				ca[j++] = c;
-			}
+		if (c == ',') {
+			ca[j] = '\0';
+			agregar_estado(&A,crear_estado(make_str(ca), 0));
 			
-			scanf("%c", &c);
+			j = 0;
+		} else {
+			ca[j++] = c;
 		}
-		
-		ca[j] = '\0';
-		
-		agregar_estado(&A,crear_estado(make_str(ca), 0));
-		
-		do {
-			scanf("%c", &c);
-		} while (c != '{');
-		
-		do {
-			scanf("%c", &c);
-		} while (c != '}');
-		
-		do {
-			scanf("%c", &c);
-		} while (c != '{');
-		
-		scanf(" %c", &c);
-		
-		while (c != '}') {
 			
-			if (c == '(') {
+		scanf("%c", &c);
+	}
+		
+	ca[j] = '\0';
+		
+	agregar_estado(&A,crear_estado(make_str(ca), 0));
+		
+	do {
+			scanf("%c", &c);
+	} while (c != '{');
+		
+	do {
+		scanf("%c", &c);
+	} while (c != '}');
+		
+	do {
+		scanf("%c", &c);
+	} while (c != '{');
+		
+	scanf(" %c", &c);
+		
+	while (c != '}') {
+			
+		if (c == '(') {
 				
-				char from[50];
-				char symbol[50];
+			char from[50];
+			char symbol[50];
+			j = 0;
+			scanf("%c", &c);
+				
+			while (c != ',') {
+				from[j++] = c;
+				scanf("%c", &c);
+			}
+				
+			from[j] = '\0';
+			j = 0;
+			scanf("%c", &c);
+				
+			while (c != ',') {
+				symbol[j++] = c;
+				scanf("%c", &c);
+			}
+				
+			symbol[j] = '\0';
+				
+			Tdata destinos = create_set();
+				
+			scanf("%c", &c);
+			if (c == '{') {
+					
+				char to[50];
+					
 				j = 0;
 				scanf("%c", &c);
-				
-				while (c != ',') {
-					from[j++] = c;
-					scanf("%c", &c);
-				}
-				
-				from[j] = '\0';
-				j = 0;
-				scanf("%c", &c);
-				
-				while (c != ',') {
-					symbol[j++] = c;
-					scanf("%c", &c);
-				}
-				
-				symbol[j] = '\0';
-				
-				Tdata destinos = create_set();
-				
-				scanf("%c", &c);
-				if (c == '{') {
 					
-					char to[50];
-					
-					j = 0;
-					scanf("%c", &c);
-					
-					while (c != '}') {
+				while (c != '}') {
 						
-						if (c == ',') {
+					if (c == ',') {
 							
-							to[j] = '\0';
-							insert_set(&destinos, make_str(to));
+						to[j] = '\0';
+						insert_set(&destinos, make_str(to));
 							
-							j = 0;
-						} else {
-							to[j++] = c;
-						}
-						
-						scanf("%c", &c);
-					}
-					
-					to[j] = '\0';
-					insert_set(&destinos, make_str(to));
-					
-					scanf("%c", &c); 
-				}
-				else {
-					
-					char to[50];
-					
-					j = 0;
-					
-					while (c != ')') {
+						j = 0;
+					} else {
 						to[j++] = c;
-						scanf("%c", &c);
 					}
+						
+					scanf("%c", &c);
+				}
+					
+				to[j] = '\0';
+				insert_set(&destinos, make_str(to));
+					
+				scanf("%c", &c); 
+			}else {
+					
+				char to[50];
+					
+				j = 0;
+					
+				while (c != ')') {
+					to[j++] = c;
+					scanf("%c", &c);
+				}
 					
 					to[j] = '\0';
 					
